@@ -1,0 +1,65 @@
+<meta charset='utf-8'>
+<html>
+<head>
+		<title>USTC Hackers' Club</title>
+		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+		<link href='/static/bootstrap.min.css' rel='stylesheet' type='text/css'>
+		<script src='/static/jquery-2.1.1.min.js'></script>
+		<script src='/static/bootstrap.min.js'></script>
+</head>
+<body>
+	<nav class='navbar navbar-default'>
+	<div class='navbar-header'>
+		<a class='navbar-brand' href='/'>USTC Hacker</a>
+	</div>
+	</nav>
+<script>
+	{%if sameName%}
+		alert('该用户名已被注册，请换一个再试试');
+	{%end%}
+
+	{%if sameMail%}
+		alert('该邮箱已被使用，请换一个再试试');
+	{%end%}
+</script>
+<script src='/static/registerCheck.js'></script>
+<div class='col-md-7'>
+<form action='/register' method='post' class='well' name='form'>
+	<div class='form-group'>
+		<label class='text-info h4'>用户名<small>（6-15个以字母开头，可带数字下划线的字串）</small></label>
+		<input type='text' name='username' class='form-control' maxlength='20'/>
+	</div>
+	<div class='form-group'>
+		<label class='text-info h4'>邮箱</label>
+		<input type='text' name='mail' class='form-control'/>
+	</div>
+	<div class='form-group'>
+		<label class='text-info h4'>密码</label>
+		<input type='password' name='password' class='form-control'/>
+	</div>
+	<div class='form-group'>
+		<label class='text-info h4'>确认密码</label>
+		<input type='password' name='password2' class='form-control'/>
+	</div>
+	<button type='submit' class='btn btn-primary' onclick='return checkform()'>注册</button>
+	<a href='/'>已有帐号，请直接登录</a>
+</form>
+</div>
+
+<div class='col-md-5'>
+	<p class='text-info h3'>USTC Hacker是什么样的人？</p>
+	<ul>
+		<li class='h4'>热爱Python的人，热衷于用代码来简化自己工作量的人，业余时间也喜欢没事儿敲两行代码的人:-)</li>
+		<li class='h4'>童年梦想是发明家的人，喜欢动手制作而非眼高手低的人，能用Raspberry Pi或Arduino实现自己想法的人，即使是最简单的:-)</li>
+		<li class='h4'>有一颗黑客内心的人，不管玩过没玩过渗透工具，不管手上有没有0day，都不是事儿，内心有一份狂热与追求的人:-)</li>
+		<li class='h4'>看到上面文字感觉自己内心仿佛小鹿乱撞，莫名戳中兴奋点的人:-)</li>
+	</ul>
+<p class='text-primary h4'>追随自己内心的声音，加入我们，搞起！！！</p>
+</div>
+		<div class='col-md-10 col-md-offset-1'>
+			<hr/>
+			<a href='/about' class='text-muted h5'>关于</a>
+			<span class='text-muted h5'>&nbsp;&nbsp; © 2014 USTC Hacker</span>
+		</div>
+	</body>
+</html>

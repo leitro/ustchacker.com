@@ -1,0 +1,144 @@
+{%extends 'main.html'%}
+{%block header%}
+<nav class='navbar navbar-default'>
+	<div class='navbar-header'>
+		<a class='navbar-brand' href='/'>USTC Hacker</a>
+	</div>
+	<div>
+	<a href='/member/1' class='h4 text-info navbar-text'>成员</a>
+	<a href='/chatting/1' class='h4 text-info navbar-text'>吐槽</a>
+	{%if not cookieName%}
+	<form action='/' method='post' class='form-inline navbar-form navbar-left'>
+		<div class='form-group'>
+			<label class='sr-only'>用户名</label>
+			<input type='text' name='username' class='form-control' placeholder='用户名'/>
+		</div>
+		<div class='form-group'>
+			<label class='sr-only'>密码</label>
+			<input type='password' name='password' class='form-control' placeholder='密码'/>
+		</div>
+		<button type='submit' class='btn btn-success'>登录</button>
+		<a href='/register'>无帐号，请点击注册</a>
+	</form>
+	{%else%}
+	<a href='/user/{{cookieName}}' class='h4 text-info navbar-text'>欢迎：{{cookieName}}</a>
+	<a onclick=sureToLogout() class='h4 text-info navbar-text'>注销</a>
+	<span id='msg'></span>
+	{%end%}
+</nav>
+{%end%}
+
+{%block content%}
+<div class='row'>
+<div class='col-md-2'>
+	<img src='/static/pic/logo.jpg' width=100% class='img-rounded' />
+</div>
+<div class='col-md-5 firstDiv'>
+	<p class='h3 text-muted text-center'>USTC Hacker资讯</p>
+	<ul>
+		{%for i in ustcInfo%}
+		<li>
+		<a href='/blog/{{i[1]}}' class='text-info h4'>{{i[0]}}</a>
+		</li>
+		<br/>
+		{%end%}
+	</ul>
+</div>
+<div class='col-md-5 firstDiv'>
+	<p class='h3 text-muted text-center'>推荐文章</p>
+	<ul>
+		{%for i in niceBlog%}
+		<li>
+		<a href='/blog/{{i[1]}}' class='text-info h4'>{{i[0]}}</a>
+		</li>
+		<br/>
+		{%end%}
+	</ul>
+</div>
+</div>
+
+<hr/>
+
+<div class='row'>
+<div class='col-md-2'>
+	<ul class='nav nav-stacked'>
+		<li><a href='/tag/Python/1_1' class='btn btn-success'>Python</a></li>
+		<li><a href='/tag/Hack/1_1' class='btn btn-success'>Hack</a></li>
+		<li><a href='/tag/RaspberryPi/1_1' class='btn btn-success'>RaspberryPi</a></li>
+		<li><a href='/tag/Arduino/1_1' class='btn btn-success'>Arduino</a></li>
+		<li><a href='/tag/Others/1_1' class='btn btn-success'>Others</a></li>
+	</ul>
+	<br/>
+	<script>
+		var path=location.pathname;
+		var items=path.split('/')
+		if(items.length==3)
+		{
+			document.write("<div class='col-md-6'><a href='/index/1_1_hottest' class='btn btn-danger' {%if order=='hottest'%}disabled{%end%}>最热</a></div><div class='col-md-6'><a href='/index/1_1' class='btn btn-danger' {%if order=='latest'%}disabled{%end%}>最新</a></div>");
+		}
+		else if(items.length==4)
+		{
+			var tag=items[2];
+			document.write("<div class='col-md-6'><a href='/tag/"+tag+"/1_1_hottest' class='btn btn-danger' {%if order=='hottest'%}disabled{%end%}>最热</a></div><div class='col-md-6'><a href='/tag/"+tag+"/1_1' class='btn btn-danger' {%if order=='latest'%}disabled{%end%}>最新</a></div>");
+		}
+	</script>
+
+    <br/>
+    <br/>
+    <br/>
+    <p class='h4 text-muted text-center'>友情链接</p>
+    <ul>
+        {%for i in friendLinks%}
+        <li><a href='{{i[0]}}' class='text-muted'>{{i[1]}}</a></li>
+        {%end%}
+    </ul>
+</div>
+
+<div class='col-md-5 secondDiv'>
+	<p class='h3 text-muted text-center'>文章列表</p>
+	<ul>
+		{%for i in blogs[20*int(blogPage)-20:20*int(blogPage)]%}
+		<li>
+		<a class='btn btn-default'>{{i[4]}}</a>
+		<a href='/blog/{{i[0]}}' class='text-info h4'>{{i[2]}}</a>
+		<label class='text-info h4'>[{%if i[5]=='new'%}原创{%elif i[5]=='reprint'%}转载{%end%}]</label>
+		<br/>
+		<a href='/user/{{i[1]}}' class='text-danger h4'>{{i[1]}}</a>
+		&nbsp;&nbsp;
+		<small>{{i[3]}}</small>
+		</li>
+		<br/>
+		{%end%}
+	</ul>
+	<ul class='pagination'>
+		{%for i in range(1,int(blogNum/21)+2)%}
+		<li {%if int(blogPage)==i%}class='active'{%end%}><a href='/index/{{i}}_{{askPage}}'>{{i}}</a></li>
+		{%end%}
+	</ul>
+</div>
+
+<div class='col-md-5 secondDiv'>
+	<p class='h3 text-muted text-center'>提问列表</p>
+	<ul>
+		{%for i in blogs_ask[20*int(askPage)-20:20*int(askPage)]%}
+		<li>
+		<a href='/tag/{{i[4]}}' class='btn btn-default'>{{i[4]}}</a>
+		<a href='/blog/{{i[0]}}' class='text-info h4'>{{i[2]}}</a>
+		<label class='text-info h4'>[提问]</label>
+		<br/>
+		<a href='/user/{{i[1]}}' class='text-danger h4'>{{i[1]}}</a>
+		&nbsp;&nbsp;
+		<small>{{i[3]}}</small>
+		</li>
+		<br/>
+		{%end%}
+	</ul>
+	<ul class='pagination'>
+		{%for i in range(1,int(askNum/21)+2)%}
+		<li {%if int(askPage)==i%}class='active'{%end%}><a href='/index/{{blogPage}}_{{i}}'>{{i}}</a></li>
+		{%end%}
+	</ul>
+</div>
+</div>
+{%end%}
+

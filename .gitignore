@@ -1,0 +1,4 @@
+__pycache__/
+*.db
+template/*~
+mailPassword.py

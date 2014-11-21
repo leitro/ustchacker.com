@@ -1,0 +1,8 @@
+<form action='/uploadPic' method='post' enctype='multipart/form-data'>
+	<label>选择图片：</label>
+	<input type='file' name='pic'>
+	<button type='submit'>上传</button>
+</form>
+{%if picLink%}
+<label class='text-muted h4'>图片URL：</label><a href='{{picLink}}' target='_blank'>http://www.ustchacker.com/{{picLink}}</a>
+{%end%}

@@ -1,0 +1,74 @@
+{%extends 'main.html'%}
+{%block header%}
+<!--<meta http-equiv='refresh' content='20'>-->
+<nav class='navbar navbar-default'>
+	<div class='navbar-header'>
+		<a class='navbar-brand' href='/'>USTC Hacker</a>
+	</div>
+	<div>
+	<a href='/member/1' class='h4 text-info navbar-text'>成员</a>
+	<a href='/chatting/1' class='h4 text-info navbar-text'>吐槽</a>
+	{%if not cookieName%}
+	<form action='/' method='post' class='form-inline navbar-form navbar-left'>
+		<div class='form-group'>
+			<label class='sr-only'>用户名</label>
+			<input type='text' name='username' class='form-control' placeholder='用户名'/>
+		</div>
+		<div class='form-group'>
+			<label class='sr-only'>密码</label>
+			<input type='password' name='password' class='form-control' placeholder='密码'/>
+		</div>
+		<button type='submit' class='btn btn-success'>登录</button>
+		<a href='/register'>无帐号，请点击注册</a>
+	</form>
+	{%else%}
+	<a href='/user/{{cookieName}}' class='h4 text-info navbar-text'>欢迎：{{cookieName}}</a>
+	<a onclick=sureToLogout() class='h4 text-info navbar-text'>注销</a>
+	<span id='msg'></span>
+	{%end%}
+</nav>
+{%end%}
+
+{%block content%}
+<div class='col-md-1'>
+</div>
+<div class='col-md-6 secondDiv'>
+<table class='table'>
+	<tr>
+		<th>排名</th>
+		<th>用户名</th>
+		<th>积分</th>
+	</tr>
+	{%for i in range(20*int(page)-20,20*int(page))%}
+	{%if i<userNum%}
+	<tr>
+		<th>
+			{{i+1}}
+		</th>
+		<th>
+			<a href='/user/{{users[i][0]}}' class='text-info h4'>{{users[i][0]}}</a>
+		</th>
+		<th>
+			{{users[i][1]}}
+		</th>
+</tr>
+	{%end%}
+	{%end%}
+	<br/>
+</table>
+	<ul class='pagination'>
+		{%for i in range(1,int(userNum/21)+2)%}
+		<li {%if int(page)==i%}class='active'{%end%}><a href='/member/{{i}}'>{{i}}</a></li>
+		{%end%}
+	</ul>
+</div>
+<div class='col-md-5'>
+	<p class='h3 text-info'>积分说明</p>
+	<ol>
+		<li>新发表一篇文章+20分</li>
+		<li>发表的文章被点一次赞+2分，上不封顶</li>
+		<li>新发表一个提问+5分</li>
+		<li>发表的提问被点一次赞+2分，上不封顶</li>
+	</ol>
+</div>
+{%end%}

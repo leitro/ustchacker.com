@@ -1,0 +1,103 @@
+{%extends 'main.html'%}
+{%block header%}
+<nav class='navbar navbar-default'>
+	<div class='navbar-header'>
+		<a class='navbar-brand' href='/'>USTC Hacker</a>
+	</div>
+	<div>
+	<a href='/member/1' class='h4 text-info navbar-text'>成员</a>
+	<a href='/chatting/1' class='h4 text-info navbar-text'>吐槽</a>
+	{%if not cookieName%}
+	<form action='/' method='post' class='form-inline navbar-form navbar-left'>
+		<div class='form-group'>
+			<label class='sr-only'>用户名</label>
+			<input type='text' name='username' class='form-control' placeholder='用户名'/>
+		</div>
+		<div class='form-group'>
+			<label class='sr-only'>密码</label>
+			<input type='password' name='password' class='form-control' placeholder='密码'/>
+		</div>
+		<button type='submit' class='btn btn-success'>登录</button>
+		<a href='/register'>无帐号，请点击注册</a>
+	</form>
+	{%else%}
+	<a href='/user/{{cookieName}}' class='h4 text-info navbar-text'>欢迎：{{cookieName}}</a>
+	<a onclick=sureToLogout() class='h4 text-info navbar-text'>注销</a>
+	<span id='msg'></span>
+	{%end%}
+</nav>
+{%end%}
+
+
+{%block content%}
+<div class='col-md-offset-1 col-md-10'>
+	<ul class='nav nav-tabs'>
+		<li class='active'><a class='text-info h5' href='/setting/info'>基本</a></li>
+		<li><a class='text-info h5' href='/setting/pw'>密码</a></li>
+	</ul>
+	
+	<link href='/static/bootstrap-datetimepicker.min.css' rel='stylesheet' type='text/css' media='screen'>
+	<form action='/setting/info' method='post' class='form-horizontal col-md-9' enctype='multipart/form-data'>
+		<div class='form-group'>
+			<label class='col-md-2 control-label'>绑定邮箱</label>
+			<label class='text-info h5'>&nbsp;&nbsp;&nbsp;&nbsp;{{userMail}}</label>
+		</div>
+		<div class='form-group'>
+			<label class='col-md-2 control-label'>上传新头像(推荐正方形照片)</label>
+			<div class='col-md-10'>
+				<input type='file' name='headpic' class='form-control'>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-md-2 control-label'>性别</label>
+			<div class='col-md-10'>
+			<table class=''>
+				<tr>
+					<th class='text-info'>男</th>
+					<th><input type='radio' name='sex' value='1' {%if sex=='1' or sex==None%}checked{%end%}></th>
+					<th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+					<th class='text-danger'>女</th>
+					<th><input type='radio' name='sex' value='0' {%if sex=='0'%}checked{%end%}></th>
+				</tr>
+			</table>
+		</div>
+		</div>
+	
+		<div class='form-group'>
+			<label class='col-md-2 control-label'>出生日期</label>
+	        <div class="input-group date form_date col-md-4" data-date="" data-date-format="dd MM yyyy" data-link-format="yyyy-mm-dd">
+				<input type='text' name='birth' class="form-control" {%if birthday%}value="{{birthday}}"{%end%} size='16' readonly>
+				<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			</div>
+		</div>
+		
+		<div class='form-group'>
+			<label class='col-md-2 control-label'>城市</label>
+			<div class='col-md-10'>
+				<input type='text' name='city' class='form-control ' {%if city%}placeholder='{{city}}'{%else%}placeholder='所在城市'{%end%}>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-md-2 control-label'>自我介绍</label>
+			<div class='col-md-10'>
+				<textarea rows='10' type='text' name='intro' class='form-control ' placeholder='写一段自我介绍吧，100字以内喔，让大家最快了解你~' maxlength='100'>{%if intro%}{{intro}}{%end%}</textarea>
+			</div>
+		</div>
+		<button type='submit' class='btn btn-danger'>提交</button>
+	</form>
+</div>
+<script src='/static/bootstrap-datetimepicker.min.js' charset='utf-8'></script>
+<script src='/static/bootstrap-datetimepicker.zh-CN.js' charset='utf-8'></script>
+<script>
+	$('.form_date').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 0,
+        todayBtn:  0,
+		autoclose: 0,
+		todayHighlight: 1,
+		startView: 4,
+		minView: 2,
+		forceParse: 0
+    });
+</script>
+{%end%}

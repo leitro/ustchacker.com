@@ -1,0 +1,69 @@
+{%extends 'main.html'%}
+{%block header%}
+<nav class='navbar navbar-default'>
+	<div class='navbar-header'>
+		<a class='navbar-brand' href='/'>USTC Hacker</a>
+	</div>
+	<div>
+	<a href='/member/1' class='h4 text-info navbar-text'>成员</a>
+	<a href='/chatting/1' class='h4 text-info navbar-text'>吐槽</a>
+	{%if not cookieName%}
+	<form action='/' method='post' class='form-inline navbar-form navbar-left'>
+		<div class='form-group'>
+			<label class='sr-only'>用户名</label>
+			<input type='text' name='username' class='form-control' placeholder='用户名'/>
+		</div>
+		<div class='form-group'>
+			<label class='sr-only'>密码</label>
+			<input type='password' name='password' class='form-control' placeholder='密码'/>
+		</div>
+		<button type='submit' class='btn btn-success'>登录</button>
+		<a href='/register'>无帐号，请点击注册</a>
+	</form>
+	{%else%}
+	<a href='/user/{{cookieName}}' class='h4 text-info navbar-text'>欢迎：{{cookieName}}</a>
+	<a onclick=sureToLogout()  class='h4 text-info navbar-text'>注销</a>
+	<span id='msg'></span>
+	{%end%}
+</nav>
+{%end%}
+
+
+{%block content%}
+<script>
+	{%if not sameOldPw%}
+		alert('当前密码输入错误，请重新输入');
+	{%end%}
+</script>
+<script src='/static/settingPwCheck.js'></script>
+<div class='col-md-offset-1 col-md-10'>
+	<ul class='nav nav-tabs'>
+		<li><a class='text-info h5' href='/setting/info'>基本</a></li>
+		<li class='active'><a class='text-info h5' href='/setting/pw'>密码</a></li>
+	</ul>
+	
+	<br/>
+	<p class='text-muted h5'>修改你的登录密码</p>
+	<form action='/setting/pw' method='post' class='form-horizontal col-md-8' name='form'>
+		<div class='form-group'>
+			<label class='col-md-2 control-label'>当前密码</label>
+			<div class='col-md-4'>
+				<input type='password' name='oldpw' class='form-control' placeholder='当前密码'/>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-md-2 control-label'>新的密码</label>
+			<div class='col-md-4'>
+				<input type='password' name='newpw' class='form-control' placeholder='新的密码'/>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-md-2 control-label'>确认密码</label>
+			<div class='col-md-4'>
+				<input type='password' name='newpw2' class='form-control' placeholder='确认密码'/>
+			</div>
+		</div>
+		<button type='submit' class='btn btn-danger' onclick='return checkform()'>保存</button>
+	</form>
+</div>
+{%end%}

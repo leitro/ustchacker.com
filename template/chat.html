@@ -1,0 +1,12 @@
+<!--<p class='text-success h3'>测试版本，每天凌晨4:00清水，enjoy it~~:-)</p>-->
+<ul>
+	{%for i in content[19*int(num)-19:19*int(num)]%}
+	<li class='text-info'><a href='/user/{{i[1]}}' class='text-info h4'>{{i[1]}}</a>&nbsp;&nbsp;&nbsp;&nbsp;<label class='text-muted h6'>({{i[3]}})</label> ： {{i[2]}}</li>
+	{%end%}
+</ul>
+<ul class='pagination'>
+	{%for i in range(1,pages+1)%}
+	<li {%if int(num)==i%}class='active'{%end%}><a href='/chatting/{{i}}'>{{i}}</a></li>
+	{%end%}
+</ul>
+

@@ -1,0 +1,145 @@
+{%extends 'main.html'%}
+{%block header%}
+<!--<meta http-equiv='refresh' content='20'>-->
+<nav class='navbar navbar-default'>
+	<div class='navbar-header'>
+		<a class='navbar-brand' href='/'>USTC Hacker</a>
+	</div>
+	<div>
+	<a href='/member/1' class='h4 text-info navbar-text'>成员</a>
+	<a href='/chatting/1' class='h4 text-info navbar-text'>吐槽</a>
+	{%if not cookieName%}
+	<form action='/' method='post' class='form-inline navbar-form navbar-left'>
+		<div class='form-group'>
+			<label class='sr-only'>用户名</label>
+			<input type='text' name='username' class='form-control' placeholder='用户名'/>
+		</div>
+		<div class='form-group'>
+			<label class='sr-only'>密码</label>
+			<input type='password' name='password' class='form-control' placeholder='密码'/>
+		</div>
+		<button type='submit' class='btn btn-success'>登录</button>
+		<a href='/register'>无帐号，请点击注册</a>
+	</form>
+	{%else%}
+	<a href='/user/{{cookieName}}' class='h4 text-info navbar-text'>欢迎：{{cookieName}}</a>
+	<a onclick=sureToLogout() class='h4 text-info navbar-text'>注销</a>
+	<span id='msg'></span>
+	{%end%}
+</nav>
+{%end%}
+
+
+{%block content%}
+<div class='row'>
+	<br/>
+	<div class='col-md-2 col-md-offset-1'>
+		<img src='/{{headpic}}' class='img-rounded' height='200' width='200'>
+	</div>
+	<div class='col-md-6'>
+		<table>
+			<tr>
+				<th class='text-info col-md-2'>用户名</th>
+				<th class='text-muted h4'>{{user}}</th>
+			</tr>
+<!--			<tr>
+				<th class='text-info col-md-2'>邮箱</th>
+				<th class='text-muted h4'>{{mail}}</th>
+			</tr>
+-->
+			<tr>
+				<th class='text-info col-md-2'>性别</th>
+				<th class='text-muted h4'>{{sex}}</th>
+			</tr>
+			<tr>
+				<th class='text-info col-md-2'>生日</th>
+				<th class='text-muted h4'>{{birthday}}</th>
+			</tr>
+			<tr>
+				<th class='text-info col-md-2'>城市</th>
+				<th class='text-muted h4'>{{city}}</th>
+			</tr>
+			<tr>
+				<th class='text-info col-md-2'>自我介绍</th>
+				<th class='text-muted h4'>{{intro}}</th>
+			</tr>
+			<tr>
+				<th class='text-info col-md-2'>注册时间</th>
+				<th class='text-muted h4'>{{regtime}}</th>
+			</tr>
+		</table>
+	</div>
+	<div class='col-md-3'>
+		<table class='table-condensed'>
+			<tr>
+				<th class='text-info h4'>排名</th>
+				<th class='text-muted h4'>{{rank}}</th>
+			</tr>
+			<tr>
+				<th class='text-info h4'>积分</th>
+				<th class='text-muted h4'>{{score}}</th>
+			</tr>
+			<tr>
+				<th class='text-info h4'>关注</th>
+				<th class='text-muted h4'><a href='/fol/{{user}}'>{{followsN}}</a></th>
+			</tr>
+			<tr>
+				<th class='text-info h4'>粉丝</th>
+				<th class='text-muted h4'><a href='/fan/{{user}}'>{{fansN}}</a></th>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-4 col-md-offset-1'>
+		<br/>
+	{%if cookieName==user%}
+	<a class='btn btn-success' href='/post'>发表新文章</a>
+	<a class='btn btn-warning' href='/setting/info'>个人设置</a>
+	{%elif cookieName not in fans%}
+	<form action='/follow/{{user}}' method='post'>
+		<button type='submit' class='btn btn-info'>关注</button>
+	</form>
+	{%else%}
+		<button type='button' class='btn btn-default' disabled>已关注</button>
+	{%end%}
+</div>
+</div>
+<br/>
+<br/>
+<div class='row'>
+	<div class='col-md-5 col-md-offset-2 secondDiv'>
+	<ul>
+		{%for i in blogs%}
+		<li>
+		<a class='btn btn-default'>{{i[4]}}</a>
+		<a href='/blog/{{i[0]}}' class='text-info h4'>{{i[2]}}</a>
+		<label class='text-info h4'>[{%if i[5]=='new'%}原创{%elif i[5]=='reprint'%}转载{%end%}]</label>
+		<br/>
+		<a href='/user/{{i[1]}}' class='text-danger h4'>{{i[1]}}</a>
+		&nbsp;&nbsp;
+		<small>{{i[3]}}</small>
+		</li>
+		<br/>
+		{%end%}
+	</ul>
+	</div>
+
+	<div class='col-md-5 secondDiv'>
+	<ul>
+		{%for i in blogs_ask%}
+		<li>
+		<a href='/tag/{{i[4]}}' class='btn btn-default'>{{i[4]}}</a>
+		<label class='text-info h4'>[提问]</label>
+		<a href='/blog/{{i[0]}}' class='text-info h4'>{{i[2]}}</a>
+		<br/>
+		<a href='/user/{{i[1]}}' class='text-danger h4'>{{i[1]}}</a>
+		&nbsp;&nbsp;
+		<small>{{i[3]}}</small>
+		</li>
+		<br/>
+		{%end%}
+	</ul>
+	</div>
+<br/>
+{%end%}

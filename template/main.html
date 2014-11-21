@@ -1,0 +1,85 @@
+<meta charset='utf-8'>
+<html>
+	<head>
+		<title>USTC Hackers' Club</title>
+		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+		<link href='/static/bootstrap.min.css' rel='stylesheet' type='text/css'>
+        <link href='/static/hacker.css' rel='stylesheet' type='text/css'>
+		<script src='/static/jquery-2.1.1.min.js'></script>
+		<script src='/static/bootstrap.min.js'></script>
+		<script>
+			function loadXMLMsg()
+			{
+				var xmlhttp;
+				xmlhttp=new XMLHttpRequest();
+				xmlhttp.onreadystatechange=function()
+				{
+					if(xmlhttp.readyState==4&&xmlhttp.status==200)
+					{
+						if(xmlhttp.responseText=='0')
+						{
+							document.getElementById('msg').innerHTML="<a href='/message/1_1' class='h4 text-info navbar-text'><strong><i>新消息</i></a><label class='text-danger'>news</label>";
+						}
+						else
+						{
+							document.getElementById('msg').innerHTML="<a href='/message/1_1' class='h4 text-info navbar-text'>消息</a>";
+						}
+					}
+				}
+				xmlhttp.open('GET','/bling',true);
+				xmlhttp.send();
+			}
+			function doUpdate()
+			{
+				loadXMLMsg();
+				window.setTimeout('doUpdate()',60000);
+			}
+			doUpdate();
+		</script>
+		<script>
+			function sureToLogout()
+			{
+				var res=confirm('确定注销登录吗？');
+				if(res)
+				{
+					location.href='/logout';
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<header>
+		{%block header%}
+		{%end%}
+		</header>
+		<content>
+		{%block content%}
+		{%end%}
+		</content>
+		<footer>
+		{%block footer%}
+		{%end%}
+		</footer>
+
+		<div class='col-md-10 col-md-offset-1'>
+			<hr/>
+		<dl class="col-md-2">
+            <dt>网站相关</dt>
+            <dd><a href="/about" class='text-muted '>关于我们</a></dd>
+            <dd><a href="/markdown" class='text-muted '>编辑器语法</a></dd>
+        </dl>
+        <dl class="col-md-2">
+            <dt>关注我们</dt>
+            <dd><a href="http://weibo.com/ustchacker" target="_blank" class='text-muted '>新浪微博</a></dd>
+        </dl>
+        <dl class="col-md-8" id="license">
+            <dt>内容许可</dt>
+            <dd class='text-muted'>除特别说明外，用户内容均采用 <a rel="license" target="_blank" class='text-muted ' href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a> 进行许可</dd>
+		</dl>
+		</div>
+		  <div class="col-md-offset-2 col-md-8">
+			  <label class='text-muted '>Copyright &copy; 2014 USTC Hacker.</label>
+			  <a href="http://www.miitbeian.gov.cn/" rel="nofollow" class='text-muted '>皖ICP备14017974号</a>
+		  </div>
+	</body>
+</html>

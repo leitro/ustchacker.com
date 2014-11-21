@@ -1,0 +1,140 @@
+{%extends 'main.html'%}
+{%block header%}
+<nav class='navbar navbar-default'>
+	<div class='navbar-header'>
+		<a class='navbar-brand' href='/'>USTC Hacker</a>
+	</div>
+	<div>
+	<a href='/member/1' class='h4 text-info navbar-text'>成员</a>
+	<a href='/chatting/1' class='h4 text-info navbar-text'>吐槽</a>
+	{%if not cookieName%}
+	<form action='/' method='post' class='form-inline navbar-form navbar-left'>
+		<div class='form-group'>
+			<label class='sr-only'>用户名</label>
+			<input type='text' name='username' class='form-control' placeholder='用户名'/>
+		</div>
+		<div class='form-group'>
+			<label class='sr-only'>密码</label>
+			<input type='password' name='password' class='form-control' placeholder='密码'/>
+		</div>
+		<button type='submit' class='btn btn-success'>登录</button>
+		<a href='/register'>无帐号，请点击注册</a>
+	</form>
+	{%else%}
+	<a href='/user/{{cookieName}}' class='h4 text-info navbar-text'>欢迎：{{cookieName}}</a>
+	<a onclick=sureToLogout() class='h4 text-info navbar-text'>注销</a>
+	<span id='msg'></span>
+	{%end%}
+</nav>
+{%end%}
+
+{%block content%}
+<div class='col-md-offset-1 col-md-10'>
+<h1>如何使用Markdown编辑文档？</h1>
+<ul>
+<li><a href="#header">1 标题</a></li>
+<li><a href="#list">2 列表</a></li>
+<li><a href="#precode">3 代码区块</a></li>
+<li><a href="#link">4 插入链接</a></li>
+<li><a href="#picture">5 插入图片</a></li>
+<li><a href="#em">6 粗体和斜体</a></li>
+<li><a href="#em">7 分割线</a></li>
+
+</ul>
+
+
+<h2 id='header'>1 标题</h2>
+<p>这是最为常用的格式，在平时常用的的文本编辑器中大多是这样实现的：输入文本、选中文本、设置标题格式。</p>
+<p>而在 Markdown 中，你只需要在文本前面加上 <code>#</code> 即可，同理、你还可以增加二级标题、三级标题、四级标题、五级标题和六级标题，总共六级，只需要增加  <code>#</code> 即可，标题字号相应降低。例如：</p>
+<pre><code># 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题</code></pre>
+<p><em>注：<code>#</code> 和「一级标题」之间建议保留一个字符的空格，这是最标准的 Markdown 写法。</em></p>
+<p>你可以你的编辑框中尝试输入这六级标题，发表文章后效果如下：</p>
+<h1>一级标题</h1>
+
+<h2>二级标题</h2>
+
+<h3>三级标题</h3>
+
+<h4>四级标题</h4>
+
+<h5>五级标题</h5>
+
+<h6>六级标题</h6>
+
+
+<h2 id='list'>2 列表</h2>
+<p>列表格式也很常用，在 Markdown 中，你只需要在文字前面加上 <code>-</code> 或 <code>+</code> 或 <code>*</code> 就可以了，例如：</p>
+<pre><code>- 文本1
+- 文本2
+- 文本3</code></pre>
+<pre><code>+ 文本1
++ 文本2
++ 文本3</code></pre>
+<pre><code>* 文本1
+* 文本2
+* 文本3</code></pre>
+<p>你可以你的编辑框中尝试输入这上面任一种无序列表，发表文章后效果如下：</p>
+<ul>
+<li>文本1</li>
+<li>文本2</li>
+<li>文本3</li>
+</ul>
+<p>如果你希望有序列表，也可以在文字前面加上 <code>1.</code> <code>2.</code> <code>3.</code> 就可以了，例如：</p>
+<pre><code>1. 文本1
+2. 文本2
+3. 文本3</code></pre>
+<p><em>注：<code>-</code>、<code>+</code>、<code>*</code>、<code>1.</code>和文本之间要保留一个字符的空格。</em></p>
+<p>你可以你的编辑框中尝试输入这上面的有序列表，发表文章后效果如下：</p>
+<ol>
+<li>文本1</li>
+<li>文本2</li>
+<li>文本3</li>
+</ol>
+
+<h2 id='precode'>3 代码区块</h2>
+<p>Markdown 提供 <code>&lt;pre&gt;</code> 和 <code>&lt;code&gt;</code> 标签来把代码区块包起来。 <code>&lt;code&gt;</code> 标签不会保留代码中的空格和换行符，所以单行的代码常用此来包括。 <code>&lt;pre&gt;</code> 标签可以保留代码中的空格和换行符。例如：</p>
+<pre><code>&lt;code&gt;lambda x,y:x+y&lt;/code&gt;</code></pre>
+<p>会被转换成：<code>lambda x,y:x+y</code>
+<p>而使用<code>&lt;pre&gt;</code> 如下：</p>
+<pre><code>&lt;pre&gt;def plus(a,b):
+	return a+b&lt;/pre&gt;</code></pre>
+<p>会被转换成：</p>
+<pre>def plus(a,b):
+	return a+b</pre>
+
+<h2 id='link'>4 插入链接</h2>
+<p>在 Markdown 中，插入链接不需要其他按钮，你只需要使用 <code>[显示文本](链接地址)</code> 这样的语法即可，例如：</p>
+<pre><code>[USTC Hacker](http://www.ustchacker.com)</code></pre>
+会被转换成：
+<a href="http://www.ustchacker.com">USTC Hacker</a>
+
+<h2 id='picture'>5 插入图片</h2>
+<p>在 Markdown 中，插入图片不需要其他按钮，你只需要使用 <code>![](图片链接地址)</code> 这样的语法即可，例如：</p>
+<pre><code>![](http://www.ustchacker.com/static/pic/unix.jpg)</code></pre>
+会被转换成：
+<img src="http://www.ustchacker.com/static/pic/unix.jpg" alt="" />
+<p><em>注：插入图片的语法和链接的语法很像，只是前面多了一个 <code>！</code>。在本站发表文章的页面下方有上传图片的按钮，上传完成后会显示一个链接，使用这个链接即可。</em></p>
+
+<h2 id='em'>6 粗体和斜体</h2>
+<p>Markdown 的粗体和斜体也非常简单，用两个 <code>*</code> 包含一段文本就是粗体的语法，用一个 <code>*</code> 包含一段文本就是斜体的语法。例如：</p>
+<pre><code> *我们*都爱用**Python**</code></pre>
+<p>最终显示的就是下文，其中「我们」是斜体，「Python」是粗体：</p>
+<p> <em>我们</em>都爱用<strong>Python</strong></p>
+
+<h2 id='hr'>7 分割线</h2>
+<p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分割线：</p>
+<pre><code>* * *
+***
+*******
+- - -
+------</code></pre>
+<p>转换后结果是：</p>
+<hr/>
+</div>
+{%end%}
+
