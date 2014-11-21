@@ -6,6 +6,11 @@ ustchacker.com
 ###网站截图：
 ![](ustchacker.png)
 
+###依赖的库：
+* [tornado](https://github.com/tornadoweb/tornado)
+* [markdown2](https://github.com/trentm/python-markdown2)
+
+
 ####注意：
 需要自己添加mailPassword.py文件，保证邮箱能正常登录,里面是：
 <pre>

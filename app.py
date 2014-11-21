@@ -42,4 +42,5 @@ settings = {
 
 app = tornado.web.Application(handlers, **settings)
 app.listen(9011)
+print('start listening on port 9011')
 tornado.ioloop.IOLoop.instance().start()
