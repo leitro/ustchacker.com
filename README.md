@@ -9,7 +9,19 @@ ustchacker.com
 ###依赖的库：
 * [tornado](https://github.com/tornadoweb/tornado)
 * [markdown2](https://github.com/trentm/python-markdown2)
-
+* [sqlite3]
+如果你使用的是ubuntu或者debian,你可以通过下边的方式安装以上库
+<pre>
+pip install tornade
+pip install markdown2
+apt-get install sqlite3
+</pre>
+或
+<pre>
+easyinstall tornado
+easyinstall markdown2
+apt-get install sqlite3
+</pre>
 
 ####注意：
 需要自己添加mailPassword.py文件，保证邮箱能正常登录,里面是：
