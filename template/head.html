@@ -1,0 +1,42 @@
+{%block header%}
+ <nav class='navbar navbar-default' role="navigation">
+     <div class="container">
+         <div class='navbar-header' style="font-size: 25px;">
+         <a class='navbar-brand' href='/' style="font-size: 25px">USTC Hacker</a>
+        </div>
+
+     <div class="collapse navbar-collapse">
+         <ul class="nav navbar-nav" style="font-size: 20px;">
+            <li class=""><a href='/member/1' class=''>成 员</a>
+            </li>
+            <li><a href='/chatting/1' class=''>吐 槽</a>
+            </li>
+        </ul>
+
+     {%if not cookieName%}
+     <form action='/' method='post' class='form-inline navbar-form navbar-right'>
+         <div class='form-group'>
+             <label class='sr-only'>用户名</label>
+             <input type='text' name='username' class='form-control'                     placeholder='用户名'/>
+         </div>
+         <div class='form-group'>
+             <label class='sr-only'>密码</label>
+             <input type='password' name='password' class='form-control'                 placeholder='密码'/>
+         </div>
+         <button type='submit' class='btn btn-success'>登 录</button>
+         <a href='/register'>立即注册</a>
+     </form>
+     {%else%}
+     <ul class="nav navbar-nav navbar-right">
+         <li><a href='/user/{{cookieName}}' class="navbar-tex">欢迎：{{cookieName}}</a>
+     </li>
+     <li><button class="btn btn-default navbar-btn" onclick=sureToLogout() 
+         style="font-size: 15px;font-family:'Times New Roman',Georgia,Serif;">注 销</button>
+     </li>
+    </ul>
+     <!--span id='msg'></span-->
+     {%end%}
+    </div><!-- end of tontainer-fluid -->
+ </nav>
+ {%end%}
+
