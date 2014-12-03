@@ -32,7 +32,6 @@ def mailTo(name, mail, verifyCode):
     txt = email.mime.text.MIMEText(content)
     msg.attach(txt)
 
-    smtp = smtplib
     smtp = smtplib.SMTP()
     smtp.connect('smtp.mail.aliyun.com', '25')
     smtp.login(sourceMail, MAILPASSWORD)

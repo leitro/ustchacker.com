@@ -1,33 +1,5 @@
 {%extends 'main.html'%}
-{%block header%}
-<nav class='navbar navbar-default'>
-	<div class='navbar-header'>
-		<a class='navbar-brand' href='/'>USTC Hacker</a>
-	</div>
-	<div>
-	<a href='/member/1' class='h4 text-info navbar-text'>成员</a>
-	<a href='/chatting/1' class='h4 text-info navbar-text'>吐槽</a>
-	{%if not cookieName%}
-	<form action='/' method='post' class='form-inline navbar-form navbar-left'>
-		<div class='form-group'>
-			<label class='sr-only'>用户名</label>
-			<input type='text' name='username' class='form-control' placeholder='用户名'/>
-		</div>
-		<div class='form-group'>
-			<label class='sr-only'>密码</label>
-			<input type='password' name='password' class='form-control' placeholder='密码'/>
-		</div>
-		<button type='submit' class='btn btn-success'>登录</button>
-		<a href='/register'>无帐号，请点击注册</a>
-	</form>
-	{%else%}
-	<a href='/user/{{cookieName}}' class='h4 text-info navbar-text'>欢迎：{{cookieName}}</a>
-	<a onclick=sureToLogout()  class='h4 text-info navbar-text'>注销</a>
-	<span id='msg'></span>
-	{%end%}
-</nav>
-{%end%}
-
+{%include 'head.html'%}
 
 {%block content%}
 <script>
