@@ -11,6 +11,7 @@
             </li>
             <li><a href='/chatting/1' class=''>吐 槽</a>
             </li>
+            <li id='msg'></li>
         </ul>
 
      {%if not cookieName%}
@@ -28,13 +29,12 @@
      </form>
      {%else%}
      <ul class="nav navbar-nav navbar-right">
-         <li><a href='/user/{{cookieName}}' class="navbar-tex">欢迎：{{cookieName}}</a>
+         <li><a href='/user/{{cookieName}}' class="">欢迎：{{cookieName}}</a>
      </li>
      <li><button class="btn btn-default navbar-btn" onclick=sureToLogout() 
          style="font-size: 15px;font-family:'Times New Roman',Georgia,Serif;">注 销</button>
      </li>
     </ul>
-    <span id='msg'></span>
      {%end%}
     </div><!-- end of tontainer-fluid -->
  </nav>
