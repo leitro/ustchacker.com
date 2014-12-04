@@ -533,11 +533,16 @@ class blingHandler(tornado.web.RequestHandler):
         selfid = self.get_cookie('hackerID')
         if selfid:
             selfname = fetchName(selfid)
-            res = readNews(selfname)
-            if res:
-                self.write('1')
-            else:
-                self.write('0')
+            try:
+                res = readNews(selfname)
+            except Exception as e:
+                print('Exception:', e)
+                res = True
+            finally:
+                if res:
+                    self.write('1')
+                else:
+                    self.write('0')
         # res True 用户读过  False 用户没读过
 
 
