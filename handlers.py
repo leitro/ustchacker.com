@@ -444,14 +444,17 @@ class messageHandler(tornado.web.RequestHandler):
     def get(self, page):
         selfid = self.get_cookie('hackerID')
         selfname = fetchName(selfid)
-        commentMsg, upMsg = showMessage(selfname)
-        setFlagYes(selfname)
-        commentLen = len(commentMsg)
-        upLen = len(upMsg)
-        commentPage, upPage = page.split('_')
-        self.render(
-            'message.html', cookieName=selfname, commentMsg=commentMsg, upMsg=upMsg,
-                    commentLen=commentLen, upLen=upLen, commentPage=commentPage, upPage=upPage)
+        if selfname:
+            commentMsg, upMsg = showMessage(selfname)
+            setFlagYes(selfname)
+            commentLen = len(commentMsg)
+            upLen = len(upMsg)
+            commentPage, upPage = page.split('_')
+            self.render(
+                'message.html', cookieName=selfname, commentMsg=commentMsg, upMsg=upMsg,
+                        commentLen=commentLen, upLen=upLen, commentPage=commentPage, upPage=upPage)
+        else:
+            self.redirect('/')
 
 
 class aboutHandler(tornado.web.RequestHandler):
