@@ -4,7 +4,7 @@ import tornado.web
 import tornado.ioloop
 from handlers import *
 
-handlers = [
+requestHandlers = [
     (r'/', mainHandler),
     (r'/index/(\w+)', indexHandler),
     (r'/member/(\d+)', memberHandler),
@@ -40,7 +40,7 @@ settings = {
     'template_path': os.path.join(os.path.dirname(__file__), 'template'),
 }
 
-app = tornado.web.Application(handlers, **settings)
+app = tornado.web.Application(requestHandlers, **settings)
 app.listen(9011)
 print('start listening on port 9011')
 tornado.ioloop.IOLoop.instance().start()
