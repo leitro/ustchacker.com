@@ -3,8 +3,7 @@ from mdFilter import *
 from sendMail import *
 import tornado.web
 import urllib.parse
-
-rootAdminName = 'leilei'
+import rootAdminName
 
 
 class mainHandler(tornado.web.RequestHandler):
@@ -597,8 +596,7 @@ class adminHandler(tornado.web.RequestHandler):
     def get(self):
         selfid = self.get_cookie('hackerID')
         selfname = fetchName(selfid)
-        global rootAdminName
-        if selfname == rootAdminName:  # the root admin
+        if selfname == rootAdminName.rootAdminName:  # the root admin
             self.render('admin.html', cookieName=selfname)
         else:
             self.redirect('/error')
@@ -606,8 +604,7 @@ class adminHandler(tornado.web.RequestHandler):
     def post(self):
         selfid = self.get_cookie('hackerID')
         selfname = fetchName(selfid)
-        global rootAdminName
-        if selfname == rootAdminName:  # the root admin
+        if selfname == rootAdminName.rootAdminName:  # the root admin
             # systemLink--USTC Hacker资讯  niceLink--推荐文章
             systemLink = self.get_argument('system')
             niceLink = self.get_argument('nice')
